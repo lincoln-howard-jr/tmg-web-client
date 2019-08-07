@@ -1,0 +1,24 @@
+#image
+{
+    height: 400px;
+    
+}
+
+#proposal
+{
+    float: right;
+}
+
+#chatty
+{
+    float: right;
+}
+.bottom
+{
+    height: 400px;
+}
+.p-border
+{
+    border-style: solid;
+    border-width: medium;
+}
