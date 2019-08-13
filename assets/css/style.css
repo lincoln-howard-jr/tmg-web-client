@@ -22,3 +22,31 @@
     border-style: solid;
     border-width: medium;
 }
+textarea {
+    box-sizing: border-box;
+    min-width: 200px;
+    width: calc(100% - 20px);
+    margin: 10px;
+    padding: 10px;
+    outline: none;
+    border: 1px solid #444;
+    border-radius: 5px;
+    resize: none;
+    overflow: scroll;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+#proposal-list > li, ul.comments-list > li {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 5px;
+    text-align: center;
+    cursor: pointer;
+    padding: 5px 0;
+}
+#proposal-list > li:hover, ul.comments-list > li:hover {
+    background-color: #f5f5fa;
+}

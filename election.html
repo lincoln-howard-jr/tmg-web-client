@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Election/Forum Page</title>
+    <script src="assets/javascript/tmg-client.js"></script>
 
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/uikit.min.css" />
+    <link rel="stylesheet" href="assets/css/uikit.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- UIkit CSS -->
@@ -48,7 +49,10 @@
 
                             <li class="nav-item text-danger">
                                 <a href="">ETC</a>
-                            </li>    
+                            </li>
+                            <li class="nav-item">
+                                <a href="/signup.html">Sign Up</a>
+                            </li>
                         </ul>
                            
                     </div>
@@ -71,52 +75,8 @@
                 <div class="p-3 mb-2 bg-info text-white">Propasals</div>
 
                 <div class="pre-scrollable" style="height: 900px; background-color: white" id="leaderboard_display">                    
-                    <form>
-                        
                     <div class="form-group">
-                        <ul uk-accordion>
-
-                            <li class="uk-open p-border">
-                                <a class="proposals uk-accordion-title" href="#" id= "">Cancer</a>
-                                <i onclick="myFunction(this)" class="fa fa-thumbs-up"></i>
-                                <div class="uk-accordion-content">
-                                    <p class ="founder">Founder: Sir Reginald Bottomlicker</p>
-                                    <p class ="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                </div>
-                            </li>
-
-                            <li class="uk-open p-border">
-                                <a class="proposals uk-accordion-title" href="#">AIDS</a>
-                                <i onclick="myFunction(this)" class="fa fa-thumbs-up"></i>
-                                <div class="uk-accordion-content">
-                                    <p class ="founder">Founder: Sir Francis Drake</p>
-                                    <p class ="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                </div>
-                            </li>
-
-                            <li class="uk-open p-border">
-                                <a class="proposals uk-accordion-title" href="#">Hand out Guns to people</a>
-                                <i onclick="myFunction(this)" class="fa fa-thumbs-up"></i>
-                                <div class="uk-accordion-content">
-                                    <p class ="founder">Founder: Donald Trump</p>
-                                    <p class ="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                </div>
-                            </li>
-
-                            <li class="uk-open p-border">
-                                    <a class="proposals uk-accordion-title" href="#">Down with Communism</a>
-                                    <i onclick="myFunction(this)" class="fa fa-thumbs-up"></i>
-                                    <div class="uk-accordion-content">
-                                        <p class ="founder">Founder: Ronald Reagan</p>
-                                        <p class ="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                    </div>
-                                </li>
-                        </div>
-                    </form>
-                    <div class="card">
-                        <ul class="list-group list-group-flush" id="voting_box">
-
-                        </ul>
+                        <ul id="proposal-list">
                     </div>
                 </div>         
             </div>
@@ -134,12 +94,13 @@
     <div class="chatty container col-md-4 " style="background-color:#343a40; height:600px" id="chatty">
             <div class="mx-auto">
                 <div class="p-3 mb-2 bg-info text-white">Chat Window</div>
-                <div class="pre-scrollable" style="height: 900px; background-color: white" id="chat-box">
-                    <ul>
-                
+                <div class="pre-scrollable" style="height: 900px; background-color: white">
+                    <ul id="forum-list">
                     </ul>
+                    <div class="add-comment-container">
+                        <textarea id="forum-add-comment" class="add-comment"></textarea>
+                    </div>
                 </div>
-                           
             </div>
     </div> 
 </div>
@@ -150,10 +111,10 @@
         
                 
                     <div class="col-sm uk-card uk-card-primary uk-card-hover uk-card-body uk-light" >
-                        <h3 class="uk-card-title">Cancer</h3>
-                        <p  class ="founder">Founder: Sir Reginald Bottomlicker</p>
-                        <p class = "like">Likes💓: 100</p>
-                        <p class = "description">description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <h3 id="selected-title">Cancer</h3>
+                        <p  id="selected-founder">Founder: Sir Reginald Bottomlicker</p>
+                        <p id= "selected-likeCount">Likes💓: 100</p>
+                        <p id= "selected-actionPlan">description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                         <a class="uk-button uk-button-default" href="#modal-overflow" uk-toggle>Comments Section</a>
 
                         <div id="modal-overflow" uk-modal>
@@ -199,6 +160,99 @@
 </div>
 </div>
 
+<script>
+    const _el = (str='div', parent, txt) => {
+        let arr = str.split ('.');
+        let ret = document.createElement (arr.splice (0, 1) [0]);
+        arr.forEach (cn => ret.classList.add (cn));
+        if (txt) ret.innerText = txt;
+        if (parent) parent.appendChild (ret);
+        return ret;
+    }
+    let forumId = '';
+    const commentBox = document.querySelector ('#forum-add-comment');
+    commentBox.addEventListener ('keypress', async (e) => {
+        try {
+            if (e.keyCode !== 13) return;
+            let comment = await tmg.createComment ('forums', forumId, commentBox.innerText);
+            commentBox.innerText = '';
+        } catch (e) {
+            alert (e);
+        }
+    });
+
+    const tmg = TMG ();
+    const causeList = document.querySelector ('#proposal-list');
+    const forumsList = document.querySelector ('#forum-list');
+    (async () => {
+        try {
+            // selected cause ui
+            const keys = 'title actionPlan founder'.split (' ');
+            const defaultCause = {title: '', actionPlan: '', founder: '', likeCount: ''};
+            const selectedCauseUI = keys.reduce ((acc, val) => {
+                acc [val] = document.querySelector (`#selected-${val}`);
+                return acc;
+            }, {});
+            const setSelectedCauseUI = (cause=defaultCause) => {
+                keys.forEach (k => selectedCauseUI [k].innerText = cause [k] );
+            }
+            // setup for elections
+            const currElection = await tmg.getElection ();
+            const currCauses = await tmg.getCauses ();
+            let selectedCause = null;
+            let causeUIElements = currCauses.map (cause => {
+                //
+                cause.founder = `${cause.user.first} ${cause.user.last}`;
+                let el = _el('li', causeList);
+                let spans = 'title founder'.split (' ').map (cn => _el (`span.${cn}`, el, cause [cn]));
+                // add evts
+                el.addEventListener ('click', (evt) => {
+                    if (selectedCause === cause)
+                        selectedCause = defaultCause;
+                    else
+                        selectedCause = cause;
+                    setSelectedCauseUI (selectedCause);
+                });
+                return el;
+            });
+            // main elections page
+            const forums = await tmg.forums ();
+            forums.forEach (forum => {
+                forumId = forum._id;
+                // create forum container
+                let forumContainer = _el ('li.forum-container', forumsList);
+                _el ('h3', forumContainer, forum.title);
+                _el ('h5', forumContainer, forum.description);
+                // comments list
+                let commentsList = _el ('ul.comments-list', forumContainer);
+                forum.comments.forEach (comment => {
+                    let open = false;
+                    let commentContainer = _el ('li', commentsList);
+                    _el ('span', commentContainer, comment.comment);
+                    _el ('span', commentContainer, `${comment.user.first} ${comment.user.last}`);
+                    let subCommentsList = _el ('ul.sub-comments-list');
+                    commentContainer.addEventListener ('click', async (evt) => {
+                        if (open) {
+                            commentsList.removeChild (subCommentsList)
+                        } else {
+                            commentsList.appendChild (subCommentsList);
+                            let subComments = await tmg.comments ('comments', comment._id);
+                            subComments.forEach (sc => {
+                                let subCommentContainer = _el ('li', subCommentsList);
+                                _el ('span', subCommentContainer, comment.comment);
+                                _el ('span', subCommentContainer, `${comment.user.first} ${comment.user.last}`);
+                            });
+                        }
+                        open = !open;
+                    });
+                });
+                forumContainer.appendChild (commentsList);
+            })
+        } catch (e) {
+            alert (e);
+        }
+    }) ();
+</script>
 
 <script>
     function myFunction(x) {
