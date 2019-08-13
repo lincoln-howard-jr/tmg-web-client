@@ -1,0 +1,87 @@
+
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 0.7fr 1.3fr 1fr 1fr;
+    grid-template-rows: 1fr 0.5fr 1.5fr 1fr 1fr 1fr 1fr;
+    grid-template-areas: "Header Header Header Header" "Carousel Carousel Carousel Carousel" "side1 main1 main1 side2" "side1 main1 main1 side2" "side1 main1 main1 side2" "side3 main2 main2 side4" "side3 main2 main2 side4";
+  }
+  
+  .Carousel 
+  { 
+      grid-area: Carousel;
+      text-align: center 
+  }
+  
+  .Header 
+  { 
+      grid-area: Header; 
+      text-align: center
+  }
+  
+  .side1 
+  { 
+      grid-area: side1;
+      border-style: solid;
+      border-width: 5px; 
+      border-collapse: separate;
+      border-spacing: 15px;
+  }
+  
+  .main1 
+  { 
+      grid-area: main1; 
+      border-style: solid;
+      border-width: 5px;
+      border-collapse: separate;
+      border-spacing: 15px;
+  }
+  
+  .side2 
+  { 
+      grid-area: side2; 
+      border-style: solid;
+      border-width: 5px;
+      border-collapse: separate;
+      border-spacing: 15px;
+  }
+  
+  .main2 
+  { 
+      grid-area: main2;
+      border-style: solid;
+      border-width: 5px;
+      border-collapse: separate;
+      border-spacing: 15px;
+  }
+  
+  .side3 
+  { 
+      grid-area: side3; 
+      border-style: solid;
+      border-width: 5px;
+      border-collapse: separate;
+      border-spacing: 15px;
+  }
+  
+  .side4 
+  { 
+      grid-area: side4; 
+      border-style: solid;
+      border-width: 5px;
+      border-collapse: separate;
+      border-spacing: 15px;
+  }
+
+.sign-in
+{
+    text-align: center;
+}
+.main-image
+{
+    border-radius: 50%;
+}
+.topic
+{
+    font-family: 'UnifrakturMaguntia', cursive;
+}
