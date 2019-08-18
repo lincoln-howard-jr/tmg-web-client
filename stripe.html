@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Election/Forum Page</title>
+
+  <script src="https://use.fontawesome.com/92468464ee.js"></script>
+  <script src="assets/javascript/tmg-client.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/uikit.min.css" />
+  <!-- UIkit CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.6/css/uikit.min.css" />
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/stripe.css">
+</head>
+<body>
+  <a id="back" href="/election.html"><i class="fa fa-arrow-left"></i></a>
+  <div id="in-use" class="collapsable collapsed"></div>
+  <form id="form" class="collapsable collapsed">
+    <label>
+      <span>Name</span>
+      <input id="cardholder-name" name="cardholder-name" class="field" disabled />
+    </label>
+    <label>
+      <span>Email</span>
+      <input id="email" type="email" class="field" disabled />
+    </label>
+    <label>
+      <span>ZIP Code</span>
+      <input name="address-zip" class="field" />
+    </label>
+    <label>
+      <span>Card</span>
+      <div id="card-element" class="field"></div>
+    </label>
+    <button type="submit">Join The World Congress</button>
+  </form>
+  <script src="assets/javascript/stripe.js"></script>
+</body>
+</html>

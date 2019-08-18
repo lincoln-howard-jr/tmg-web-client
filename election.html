@@ -15,97 +15,51 @@
     <!-- UIkit CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.6/css/uikit.min.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/election.css">
 </head>
 <body>
     
-    <div class = "main">
-        <!--Header bar-->
-        <header id = "">
+    <header id = "">
 
-            <div class = "col-md-12 container">
+        <div class = "container-fluid text-libre">
 
-                <nav class = "navbar navbar-expanded-lg navbar-dark bg-dark">
+            <nav class = "navbar">
 
-                    <div class = "col-md-3">
-                        <h2><a class ="navbar-brand bf-dark text-danger" id = "">Metropolitan Global</a></h2>
-                    </div>
-
-                    <div class = "col-md-5">
-                            <h1><a href = "">Global Congress</a></h1>
-                    </div>
-                    
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                        <ul class="navbar-nav">
-                            <li class="nav-item text-danger">
-                                <a href="">Home</a>
-                            </li>
-
-                            <li class="nav-item text-danger">
-                                <a href="">Profile Page</a>
-                            </li>
-
-                            <li class="nav-item text-danger">
-                                <a href="">ETC</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/signup.html">Sign Up</a>
-                            </li>
-                        </ul>
-                           
-                    </div>
-                </nav>
-            </div>
-
-        </header>
-    </div>
-    <br>
-    <body onload="startTime()">
-    <div id="time"></div>
-    </body>
-    <br>
-    <br>
-    <!--Proposal Box-->
-    <div class = "row" style = "padding: 0px 0px 30px 0px">
-
-        <div class="container col-md-3 " style="background-color:#343a40; height:600px" id="chatty">
-            <div class="mx-auto">
-                <div class="p-3 mb-2 bg-info text-white">Propasals</div>
-
-                <div class="pre-scrollable" style="height: 900px; background-color: white" id="leaderboard_display">                    
-                    <div class="form-group">
-                        <ul id="proposal-list">
-                    </div>
-                </div>         
-            </div>
-    </div>
-
-    <!--Image-->
-    <div class="image col-md-4 " style="background-color:#343a40; height:600px" id="chatty">
-        <div class="mx-auto">
-            <div class="p-3 mb-2 bg-info text-white">Image</div>
-            <img src="assets/images/congress.jpg" class="auth-image" alt="Your Name">
-        </div>
-</div>
-
-    <!--chat window-->
-    <div class="chatty container col-md-4 " style="background-color:#343a40; height:600px" id="chatty">
-            <div class="mx-auto">
-                <div class="p-3 mb-2 bg-info text-white">Chat Window</div>
-                <div class="pre-scrollable" style="height: 900px; background-color: white">
-                    <ul id="forum-list">
-                    </ul>
-                    <div class="add-comment-container">
-                        <textarea id="forum-add-comment" class="add-comment"></textarea>
-                    </div>
+                <div class = "col-md-3 hidden-sm-down">
                 </div>
-            </div>
-    </div> 
-</div>
 
-<div class = "container col-md-12 bg-dark">
+                <div class = "col-md-6 col-sm-12 text-center">
+                    <h1 id="title-text">The Metropolitan Global</h1>
+                </div>
+
+                <div class="col-md-3 col-sm-12 auth-btn-container mt-2 mb-2">
+                    <a class="auth-btn" href="/login.html">Log In</a>
+                    <a class="auth-btn" href="/signup.html">Sign Up</a>
+                    <a id="logout-btn" href class="auth-btn">Log Out</a>
+                </div>
+
+            </nav>
+        </div>
+
+    </header>
+
+    <div class="main-grid">
+        <!--Proposal Box-->
+        <div class="proposals">
+            <h3>Proposals</h3>
+            <ul id="proposal-list">
+        </div>
+        <!--Image-->
+
+        <!--chat window-->
+        <div>
+            <ul id="forum-list">
+            </ul>
+            <div id="forum-comment-container">
+            </div>
+        </div>
+    </div>
+<div class = "container-fluid bg-dark">
     <div class = "row" id = "bottom" style = "height: 500px">
         <div class = "col-sm">
         
@@ -160,100 +114,7 @@
 </div>
 </div>
 
-<script>
-    const _el = (str='div', parent, txt) => {
-        let arr = str.split ('.');
-        let ret = document.createElement (arr.splice (0, 1) [0]);
-        arr.forEach (cn => ret.classList.add (cn));
-        if (txt) ret.innerText = txt;
-        if (parent) parent.appendChild (ret);
-        return ret;
-    }
-    let forumId = '';
-    const commentBox = document.querySelector ('#forum-add-comment');
-    commentBox.addEventListener ('keypress', async (e) => {
-        try {
-            if (e.keyCode !== 13) return;
-            let comment = await tmg.createComment ('forums', forumId, commentBox.innerText);
-            commentBox.innerText = '';
-        } catch (e) {
-            alert (e);
-        }
-    });
-
-    const tmg = TMG ();
-    const causeList = document.querySelector ('#proposal-list');
-    const forumsList = document.querySelector ('#forum-list');
-    (async () => {
-        try {
-            // selected cause ui
-            const keys = 'title actionPlan founder'.split (' ');
-            const defaultCause = {title: '', actionPlan: '', founder: '', likeCount: ''};
-            const selectedCauseUI = keys.reduce ((acc, val) => {
-                acc [val] = document.querySelector (`#selected-${val}`);
-                return acc;
-            }, {});
-            const setSelectedCauseUI = (cause=defaultCause) => {
-                keys.forEach (k => selectedCauseUI [k].innerText = cause [k] );
-            }
-            // setup for elections
-            const currElection = await tmg.getElection ();
-            const currCauses = await tmg.getCauses ();
-            let selectedCause = null;
-            let causeUIElements = currCauses.map (cause => {
-                //
-                cause.founder = `${cause.user.first} ${cause.user.last}`;
-                let el = _el('li', causeList);
-                let spans = 'title founder'.split (' ').map (cn => _el (`span.${cn}`, el, cause [cn]));
-                // add evts
-                el.addEventListener ('click', (evt) => {
-                    if (selectedCause === cause)
-                        selectedCause = defaultCause;
-                    else
-                        selectedCause = cause;
-                    setSelectedCauseUI (selectedCause);
-                });
-                return el;
-            });
-            // main elections page
-            const forums = await tmg.forums ();
-            forums.forEach (forum => {
-                forumId = forum._id;
-                // create forum container
-                let forumContainer = _el ('li.forum-container', forumsList);
-                _el ('h3', forumContainer, forum.title);
-                _el ('h5', forumContainer, forum.description);
-                // comments list
-                let commentsList = _el ('ul.comments-list', forumContainer);
-                forum.comments.forEach (comment => {
-                    let open = false;
-                    let commentContainer = _el ('li', commentsList);
-                    _el ('span', commentContainer, comment.comment);
-                    _el ('span', commentContainer, `${comment.user.first} ${comment.user.last}`);
-                    let subCommentsList = _el ('ul.sub-comments-list');
-                    commentContainer.addEventListener ('click', async (evt) => {
-                        if (open) {
-                            commentsList.removeChild (subCommentsList)
-                        } else {
-                            commentsList.appendChild (subCommentsList);
-                            let subComments = await tmg.comments ('comments', comment._id);
-                            subComments.forEach (sc => {
-                                let subCommentContainer = _el ('li', subCommentsList);
-                                _el ('span', subCommentContainer, comment.comment);
-                                _el ('span', subCommentContainer, `${comment.user.first} ${comment.user.last}`);
-                            });
-                        }
-                        open = !open;
-                    });
-                });
-                forumContainer.appendChild (commentsList);
-            })
-        } catch (e) {
-            alert (e);
-        }
-    }) ();
-</script>
-
+<script src="assets/javascript/election.js"></script>
 <script>
     function myFunction(x) {
       x.classList.toggle("fa-thumbs-down");

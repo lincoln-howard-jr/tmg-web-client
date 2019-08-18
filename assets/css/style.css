@@ -1,3 +1,41 @@
+@import url('https://fonts.googleapis.com/css?family=News+Cycle');
+@import url('https://fonts.googleapis.com/css?family=Libre+Baskerville');
+@import url('https://fonts.googleapis.com/css?family=Diplomata+SC');
+:root {
+--barely-green: #a5bdaa;
+--med-green: #8dac94;
+--dark-green: #6f8372;
+--brown-shirts: #82716e;
+--tan-blonde: #e4decd71;
+--blondey: #c2b490;
+}
+h1, h2, h3, h4, h5, h6 {
+font-family: 'Diplomata SC', cursive !important;
+text-align: center;
+font-weight: bold;
+user-select: none;
+}
+h1 {
+    font-size: calc(100vw / 35);
+}
+h2 {
+    font-size: calc(100vw / 55);
+}
+h3 {
+    font-size: calc(100vw / 75);
+}
+h4 {
+    font-size: calc(100vw / 95);
+}
+h5 {
+    font-size: calc(100vw / 105);
+}
+h6 {
+    font-size: calc(100vw / 115);
+}
+.italics {
+    font-style: italic;
+}
 #image
 {
     height: 400px;
@@ -33,20 +71,4 @@ textarea {
     border-radius: 5px;
     resize: none;
     overflow: scroll;
-}
-ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-#proposal-list > li, ul.comments-list > li {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: 5px;
-    text-align: center;
-    cursor: pointer;
-    padding: 5px 0;
-}
-#proposal-list > li:hover, ul.comments-list > li:hover {
-    background-color: #f5f5fa;
 }

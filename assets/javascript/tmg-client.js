@@ -219,6 +219,32 @@ const TMG = () => {
       }
     })
   }
+  // get payment methods
+  const getPaymentMethods = async () => {
+    // promise
+    return new Promise (async (resolve, reject) => {
+      //t/c
+      try {
+        let response = await fetch (`${base}/api/payments/methods`, {credentials: "include"});
+        if (!response.ok) throw new RequestStatusError ('GET', '/api/payments/methods', response.status);
+        let me = await response.json ();
+        resolve (me);
+      } catch (e) {
+        reject (e);
+      }
+    })
+  }
+  // create payment method
+  const addPaymentMethod = async (token) => {
+    return new Promise (async (resolve, reject) => {
+      try {
+        let data = await post ('/api/payments/methods', {token});
+        resolve (data);
+      } catch (e) {
+        reject (e);
+      }
+    });
+  }
   // get a single user
   const user = async (id) => {
     // promise
@@ -360,7 +386,7 @@ const TMG = () => {
     return new Promise (async (resolve, reject) => {
       // t/c
       try {
-        let response = await fetch (`${base}/api/comments${type}/${id}`, {credentials: "include"});
+        let response = await fetch (`${base}/api/comments/${type}/${id}`, {credentials: "include"});
         if (!response.ok) throw new RequestStatusError ('GET', `/api/comments${type}/${id}`, response.status);
         let data = await response.json ();
         resolve (data);
@@ -374,7 +400,7 @@ const TMG = () => {
       try {
         // verify type is valid
         if ('forums articles comments'.split (' ').indexOf (type) === -1) throw new Error (`Type ${type} is not valid, must be forums, articles, or comments`);
-        let response = await fetch (`${base}/api/${type}/${id}/comments`, {
+        let response = await fetch (`${base}/api/comments/${type}/${id}`, {
           ...postOpts,
           body: JSON.stringify ({comment})
         });
@@ -385,6 +411,10 @@ const TMG = () => {
         reject (e);
       }
     });
+  }
+  // 
+  const like = async (type, id) => {
+    
   }
   // get current election
   const getCurrentElection = async () => {
@@ -448,6 +478,8 @@ const TMG = () => {
     signup,
     logout,
     me,
+    getPaymentMethods,
+    addPaymentMethod,
     forums,
     createForum,
     createComment,
