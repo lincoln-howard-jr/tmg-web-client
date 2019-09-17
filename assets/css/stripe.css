@@ -40,6 +40,9 @@ body > .collapsable {
   opacity: 0;
   max-height: 25px;
 }
+.hidden {
+  display: none;
+}
 label {
   position: relative;
   color: #6A7C94;
@@ -91,36 +94,15 @@ button {
   height: 48px;
   line-height: 48px;
   outline: none !important;
+  transition: 0.5s;
+}
+button.alt {
+  background-image: linear-gradient(-180deg, white 0%, var(--tan-blonde) 100%);
+  color: var(--dark-green);
+}
+button:hover {
+  transform: scale(0.97);
 }
 button:focus {
   outline: none !important;
-}
-.outcome {
-  float: left;
-  width: 100%;
-  padding-top: 8px;
-  min-height: 20px;
-  text-align: center;
-}
-
-.success, .error {
-  display: none;
-  font-size: 13px;
-}
-
-.success.visible, .error.visible {
-  display: inline;
-}
-
-.error {
-  color: #E4584C;
-}
-
-.success {
-  color: #F8B563;
-}
-
-.success .token {
-  font-weight: 500;
-  font-size: 13px;
 }

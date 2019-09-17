@@ -7,7 +7,7 @@ class EmptyFieldError extends Error {
 }
 class RequestStatusError extends Error {
   constructor (method, path, status) {
-    super (`${method} ${path} returned with a status of status`);
+    super (`${method} ${path} returned with a status of ${status}`);
     this.method = method;
     this.path = path;
     this.status = status;
@@ -245,6 +245,17 @@ const TMG = () => {
       }
     });
   }
+  // subscribe
+  const subscribe = async () => {
+    return new Promise (async (resolve, reject) => {
+      try {
+        let data = await post ('/api/payments');
+        resolve (data);
+      } catch (e) {
+        reject (e);
+      }
+    });
+  }
   // get a single user
   const user = async (id) => {
     // promise
@@ -414,7 +425,13 @@ const TMG = () => {
   }
   // 
   const like = async (type, id) => {
-    
+    return new Promise (async (resolve, reject) => {
+      try {
+        resolve (await post (`/api/likes/${type}/${id}`));
+      } catch (e) {
+        reject (e);
+      }
+    });
   }
   // get current election
   const getCurrentElection = async () => {
@@ -480,9 +497,11 @@ const TMG = () => {
     me,
     getPaymentMethods,
     addPaymentMethod,
+    subscribe,
     forums,
     createForum,
     createComment,
+    like,
     getElection,
     getCauses,
     comments

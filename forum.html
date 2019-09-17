@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>Election/Forum Page</title>
+      <script src="assets/javascript/tmg-client.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/107/three.js"></script>
+
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      <link rel="stylesheet" href="assets/css/uikit.min.css" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+      <!-- UIkit CSS -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.6/css/uikit.min.css" />
+      <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+      <link rel="stylesheet" type="text/css" href="assets/css/forum.css">
+  </head>
+  <body>
+    <!-- Header/Navbar -->
+    <header>
+      <nav>
+        <div id="welcome-user" class="italics">
+        </div>
+
+        <div class = "text-center">
+            <h1 id="title-text">The Metropolitan Global</h1>
+        </div>
+
+        <div class="auth-btn-container mt-2 mb-2">
+            <a class="auth-btn hidden" href="/login.html">Log In</a>
+            <a class="auth-btn hidden" href="/signup.html">Sign Up</a>
+        </div>
+      </nav>
+    </header>
+    <!-- Forum section -->
+    <main>
+      <h3 class="forum-title">Global Chat</h3>
+      <ul class="forum-comments-list">
+          <!-- First level comments -->
+        <li class="forum-comment">
+          <div class="forum-comment-container">
+              <span class="forum-comment-content">It's time to blaze it homie</span>
+              <span class="forum-comment-info">420blazeit at 4:20pm 4/20/19</span>
+          </div>
+          <ul class="forum-comment-list">
+            <!-- Second level comments -->
+            <li class="forum-comment">
+              <div class="forum-comment-container">
+                  <span class="forum-comment-content">It's time to blaze it homie</span>
+                  <span class="forum-comment-info">420blazeit at 4:20pm 4/20/19</span>
+              </div>
+              <ul class="forum-comment-list">
+                <!-- Third level comments -->
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <textarea id="forum-create-comment"></textarea>
+      <p id="forum-create-comment-caption">Commenting on main thread</p>
+    </main>
+  </body>
+</html>

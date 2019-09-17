@@ -1,3 +1,4 @@
+// construct an element
 const _el = (str='div', parent, txt) => {
   let arr = str.split ('.');
   let ret = document.createElement (arr.splice (0, 1) [0]);
@@ -7,122 +8,187 @@ const _el = (str='div', parent, txt) => {
   return ret;
 }
 
-const createCommentBox = (parent, _type, _id) => {
-    let commentBox = _el ('textarea.comment-box', parent);
-    let alert = _el ('p.comment-box-alert', parent, 'Commenting on main thread');
-    let type = _type;
-    let id = _id;
+// initialize api
+const tmg = TMG ();
+let me, forum = {comments: []}, election = {month: {month: '', year: ''}}, causes = [];
+
+// dom connections
+const causeList = document.querySelector ('#cause-list');
+const forumsList = document.querySelector ('#forum-list');
+const logoutButton = document.querySelector ('#logout-btn');
+
+// get forums
+const initForums = async () => {
+    return new Promise (async resolve => {
+        try {
+            let forums = await tmg.forums ();
+            forum = forums [0];
+        } catch (e) {
+            console.log (e);
+        }
+        resolve ();
+    });
+}
+const initElection = async () => {
+    return new Promise (async resolve => {
+        try {
+            election = await tmg.getElection ();
+            causes = await tmg.getCauses ();
+            causes = causes.map (cause => {
+                return {...cause, founder: `${cause.user.first} ${cause.user.last}`}
+            });
+        } catch (e) {
+            console.log (e);
+        }
+        resolve ();
+    });
+}
+// initialize the comment box
+let comment_id, comment_type, comment_alert;
+const commentComponent = (comment, parent) => {
+    /**
+     *  <li class="forum-comment">
+     *      <div class="forum-comment-container">
+     *          <span class="forum-comment-content">{comment.comment}</span>
+     *          <span class="forum-comment-info">
+     *              <span class="forum-comment-info-founder">- {comment.user.first} {comment.user.last}</span>
+     *              <span class="forum-comment-likes (didIlike ? i-liked)">
+     *                  <span>{comment.likes}</span>
+     *                  <i class="fa fa-thumbs-up" />
+     *              </span>
+     *              <span class="forum-comment-open-close">[depends on up and down state]</span>
+     *          </span>
+     *      </div>
+     *      <ul class="forum-comments-list">
+     *          <CommentComponent />
+     *      </ul>
+     *  </li>
+     */
+    // forum list element
+    let forumComment = _el ('li.forum-comment', parent);
+    // comment container and content
+    let forumCommentContainer = _el ('div.forum-comment-container', forumComment);
+    _el ('span.forum-comment-content', forumCommentContainer, comment.comment);
+    // comment info
+    let forumCommentInfo = _el ('span.forum-comment-info', forumCommentContainer);
+    _el ('span.forum-comment-info-founder', forumCommentInfo, `- ${comment.user.first} ${comment.user.last}`);
+    // likes
+    let forumCommentLikes = _el ('span.forum-comment-likes', forumCommentInfo);
+    _el ('span', forumCommentLikes, comment.likes);
+    _el ('i.fa.fa-thumbs-up', forumCommentLikes);
+    if (comment.didIlike) {
+        forumCommentLikes.classList.add ('i-liked');
+    } else {
+        forumCommentLikes.addEventListener ('click', e => tmg.like ('comments', comment._id));
+    }
+    // add open handler
+    let forumCommentOpenClose = false;
+    if (comment.subCommentCount) {
+        forumCommentOpenClose = _el ('span.forum-comment-open-close', forumCommentInfo);
+        let arrow = _el ('i.fa.fa-chevron-up', forumCommentOpenClose);
+        let open = false;
+        forumCommentOpenClose.addEventListener ('click', e => {
+            forumComment.classList.toggle ('open');
+            arrow.className = 'fa ' + (open ? 'fa-chevron-up' : 'fa-chevron-down');
+            open = !open;
+        });
+    }
+    //  add select and open event handlers
+    forumCommentContainer.addEventListener ('click', e => {
+        if (forumCommentLikes.contains (e.target) || forumCommentOpenClose.contains (e.target)) return;
+        selectComment (forumComment, comment)
+    });
+    // subcomment list
+    let subCommentList = _el ('ul.forum-comments-list', forumComment);
+    // generate subcomment list, if error try again in 30 seconds
+    const runSubComments = async () => {
+        try {
+            subCommentList.innerHTML = '';
+            subComments = await tmg.comments ('comments', comment._id);
+            subComments.map (subComment => commentComponent (subComment, subCommentList));
+        } catch (e) {
+            _el ('li', subCommentList, 'error while loading comments')
+            setTimeout (runSubComments, 30000);
+        }
+    }
+    runSubComments ();
+}
+// select a comment to comment on
+const selectComment = (commentComponent, comment) => {
+    if (commentComponent.classList.contains ('selected')) {
+        comment_id = forum._id;
+        comment_type = 'forums';
+        comment_alert.innerText = 'Commenting on main thread';
+    } else {
+        Array.from (document.querySelectorAll ('.selected')).forEach (e => e.classList.remove ('selected'));
+        comment_id = comment._id;
+        comment_type = 'comments';
+        comment_alert.innerText = `Commenting on comment by ${comment.user.first} ${comment.user.last}`
+    }
+    commentComponent.classList.toggle ('selected');
+}
+// setup comment box
+const initCommentBox = () => {
+    let commentBox = _el ('textarea.comment-box', document.querySelector ('#forum-create-comment-container'));
+    comment_alert = _el ('p.comment-box-alert', document.querySelector ('#forum-create-comment-container'), 'Commenting on main thread');
     commentBox.addEventListener ('keypress', async (e) => {
         try {
             if (e.keyCode !== 13) return;
-            let comment = await tmg.createComment (type, id, commentBox.value);
+            await tmg.createComment (comment_type, comment_id, commentBox.value);
             commentBox.value = '';
         } catch (e) {
             alert (e);
         }
     });
-    const setCommentBoxAlert = (_alert) => {
-        alert.innerText = _alert;
-    }
-    const setCommentBoxId = (_id) => {
-        id = _id;
-    }
-    const setCommentBoxType = (_type) => {
-        type = _type;
-    }
-    return {commentBox, setCommentBoxId, setCommentBoxType, setCommentBoxAlert};
 }
-
-const tmg = TMG ();
-const causeList = document.querySelector ('#proposal-list');
-const forumsList = document.querySelector ('#forum-list');
-const logoutButton = document.querySelector ('#logout-btn');
-logoutButton.addEventListener ('click', async (e) => {
-    try {
-        await tmg.logout ();
-    } catch (e) {
-        alert (e);
-    }
-});
+// init forum section
+const initForumSection = () => {
+    forum.comments.map (comment => commentComponent (comment, forumsList));
+}
+// open selected cause
+let selectedCause, defaultCause = {title: '', actionPlan: '', founder: ''};
+const selectCause = (cause, component) => {
+    selectedCause = cause;
+    Array.from (document.querySelectorAll ('.selected-cause')).forEach (cc => cc.classList.remove ('selected-cause'));
+    component.classList.add ('selected-cause');
+    document.querySelector ('#cause-title').innerText = cause.title;
+    document.querySelector ('#cause-action-plan').innerText = cause.actionPlan;
+    document.querySelector ('#cause-founder').innerText = cause.founder;
+}
+// create cause component
+// retunrs dismount method
+const causeComponent = (cause, parent) => {
+    /**
+     *  <li class="cause-container">
+     *      <span class="cause-title"></span>
+     *      <span class="cause-likes"></span>
+     *      <span class="cause-comments"></span>
+     *  </li>
+     */
+    let causeContainer = _el ('li.cause-container', parent);
+    _el ('span.cause-title', causeContainer, cause.title);
+    let causeLikes = _el ('span.cause-likes', causeContainer);
+    _el ('span', causeLikes, cause.likeCount);
+    _el ('i.fa.fa-thumbs-up', causeLikes);
+    if (cause.didILike) causeLikes.classList.add ('i-liked');
+}
+// init cause ui
+const initElectionUI = () => {
+    let heading = document.querySelector ('#cause-list-heading');
+    if (election.phase === 'concluded')
+        heading.innerText = `Election for ${election.month.month}/${election.month.year} concluded`;
+    if (election.phase === 'prelim')
+        heading.innerText = `Preliminary voting open!`;
+    if (election.phase === 'intermediate')
+        heading.innerText = `Developmental Phase for ${election.month.month}/${election.month.year}`;
+    if (election.phase === 'general')
+        heading.innerText = 'Time To Vote!';
+    let components = causes.map (c => causeComponent (c, causeList));
+}
 (async () => {
-  try {
-      // selected cause ui
-      const keys = 'title actionPlan founder'.split (' ');
-      const defaultCause = {title: '', actionPlan: '', founder: '', likeCount: ''};
-      const selectedCauseUI = keys.reduce ((acc, val) => {
-          acc [val] = document.querySelector (`#selected-${val}`);
-          return acc;
-      }, {});
-      const setSelectedCauseUI = (cause=defaultCause) => {
-          keys.forEach (k => selectedCauseUI [k].innerText = cause [k] );
-      }
-      // setup for elections
-      const currElection = await tmg.getElection ();
-      const currCauses = await tmg.getCauses ();
-      let selectedCause = null;
-      let causeUIElements = currCauses.map (cause => {
-          //
-          cause.founder = `${cause.user.first} ${cause.user.last}`;
-          let el = _el('li', causeList);
-          let spans = 'title founder'.split (' ').map (cn => _el (`span.${cn}`, el, cause [cn]));
-          // add evts
-          el.addEventListener ('click', (evt) => {
-              if (selectedCause === cause)
-                  selectedCause = defaultCause;
-              else
-                  selectedCause = cause;
-              setSelectedCauseUI (selectedCause);
-          });
-          return el;
-      });
-        // main elections page
-        const forums = await tmg.forums ();
-        // create forums section vars
-        let setCommentBoxId, setCommentBoxType;
-        
-        // create comment component for a comment on a parent
-        const commentComponent = (comment, parent) => {
-            let open = false;
-            let subComments = [];
-            let commentContainer = _el ('li.comment-container', parent);
-            _el ('span', commentContainer, comment.comment);
-            _el ('span.italics', commentContainer, `${comment.user.first} ${comment.user.last}`);
-            let likeDetails = _el ('span.like-details', commentContainer);
-            if (comment.didILike) likeDetails.classList.add ('i-liked');
-            _el ('span', likeDetails, comment.likes)
-            _el ('i.fa.fa-thumbs-up', likeDetails);
-            let commentDetails = _el ('span.comment-details', commentContainer);
-            _el ('span', commentDetails, comment.subCommentCount);
-            _el ('i.fa.fa-comment', commentDetails);
-            let subCommentsList = _el ('ul.comments-list');
-            let loadSubComments = async (e) => {
-                commentContainer.classList.add ('selected');
-                if (!comment.subCommentCount) return;
-                try {
-                    subComments = await tmg.comments ('comments', comment._id);
-                    subComments.map (c => commentComponent (c, subCommentsList));
-                    setCommentBoxId (comment._id);
-                    setCommentBoxType ('comments');
-                    commentContainer.appendChild (subCommentsList);;
-                } catch (e) {
-                    console.log (e);
-                }
-            }
-            commentDetails.addEventListener ('click', loadSubComments);
-        }
-        // forums 
-        forums.forEach (forum => {
-            // create forum container
-            let forumContainer = _el ('li.forum-container', forumsList);
-            _el ('h3', forumContainer, forum.title);
-            // comments list
-            let commentsList = _el ('ul.comments-list', forumContainer);
-            forum.comments.map (comment => commentComponent (comment, commentsList));
-            let cbox = createCommentBox (document.querySelector ('#forum-comment-container'), 'forums', forum._id);
-            setCommentBoxId = cbox.setCommentBoxId;
-            setCommentBoxType = cbox.setCommentBoxType;
-        });
-  } catch (e) {
-      alert (e);
-  }
+    await initForums ();
+    await initElection ();
+    initElectionUI ();
+    initForumSection ();
+    initCommentBox ();
 }) ();

@@ -48,8 +48,13 @@
             
         </div>
         <script>
-            (() => {
+            (async () => {
                 const tmg = TMG ();
+                try {
+                    let me = await tmg.me ();
+                    if (me) location.href = '/election.html';
+                } catch (e) {
+                }
                 const inputs = {
                     username: document.querySelector ('#username'),
                     password: document.querySelector ('#password')

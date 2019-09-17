@@ -33,7 +33,8 @@ card.mount('#card-element');
 async function setOutcome(result) {
   try {
     if (result.token) {
-      await tmg.createToken (result.token);
+      await tmg.addPaymentMethod (result.token);
+      await tmg.subscribe ();
       successElement.querySelector('.token').textContent = result.token.id;
       successElement.classList.add('visible');
     } else if (result.error) {
@@ -69,17 +70,27 @@ document.querySelector('form').addEventListener('submit', function(e) {
 });
 
 // ui for user to show form
-const userAddCard = (me) => {
+const userAddCard = (me, cardsInUse) => {
   document.querySelector ('#cardholder-name').value = me.first + ' ' + me.last;
   document.querySelector ('#email').value = me.email;
+  if (cardsInUse && cardsInUse.length) {
+    document.querySelector ('#card-label').innerText = `Card ending in ${cardsInUse [0].last4} found on file`;
+    Array.from (document.querySelectorAll ('.hidden')).forEach (el => el.classList.remove ('hidden'));
+  }
   form.classList.remove ('collapsed');
 }
 
 // ui component to show if user is subscribed
-const userIsSuscribed = (me) => {
+const userIsSuscribed = (me, cardsInUse) => {
+  let card = cardsInUse [0];
   let div = _el ('div.text-center', cardParent, `Welcome congressperson ${me.first} ${me.last}!
   Your dues are paid until ${me.paidThrough.month}/${me.paidThrough.year}, at which point you will be billed $12 again -
   let's make a difference together!`);
+  _el ('div', cardParent, `Currently using ${card.brand} ending in ${card.last4}`);
+  _el ('button', cardParent, 'Add new card...').addEventListener ('click', () => {
+    cardParent.classList.add ('collapsed');
+    userAddCard (me);
+  });
   cardParent.classList.remove ('collapsed');
 }
 
@@ -92,19 +103,11 @@ let form = document.querySelector ('#form');
     me = await tmg.me ();
     cardsInUse = await tmg.getPaymentMethods ();
   } catch (e) {
+    location.href = '/login.html';
   }
-  if (!me) return location.href = '/login.html';
-  if (!me.subscribed || !cardsInUse || !cardsInUse.length) {
-    userAddCard (me);
-  } else if (me.subscribed) {
-    userIsSuscribed (me);
+  if (!me.subscribed) {
+    userAddCard (me, cardsInUse);
   } else {
-    let card = cardsInUse [0];
-    _el ('div', cardParent, `Currently using ${card.brand} ending in ${card.last4}`);
-    _el ('button', cardParent, 'Add new card...').addEventListener ('click', () => {
-      cardParent.classList.add ('collapsed');
-      form.classList.remove ('collapsed');
-    });
-    cardParent.classList.remove ('collapsed');
+    userIsSuscribed (me, cardsInUse);
   }
 }) ();

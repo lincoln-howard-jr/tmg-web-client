@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Election/Forum Page</title>
     <script src="assets/javascript/tmg-client.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/107/three.js"></script>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/uikit.min.css" />
@@ -18,103 +18,48 @@
     <link rel="stylesheet" type="text/css" href="assets/css/election.css">
 </head>
 <body>
-    
-    <header id = "">
+<header>
+    <nav>
 
-        <div class = "container-fluid text-libre">
-
-            <nav class = "navbar">
-
-                <div class = "col-md-3 hidden-sm-down">
-                </div>
-
-                <div class = "col-md-6 col-sm-12 text-center">
-                    <h1 id="title-text">The Metropolitan Global</h1>
-                </div>
-
-                <div class="col-md-3 col-sm-12 auth-btn-container mt-2 mb-2">
-                    <a class="auth-btn" href="/login.html">Log In</a>
-                    <a class="auth-btn" href="/signup.html">Sign Up</a>
-                    <a id="logout-btn" href class="auth-btn">Log Out</a>
-                </div>
-
-            </nav>
+        <div id="welcome-user" class = "italics">
         </div>
 
-    </header>
-
-    <div class="main-grid">
-        <!--Proposal Box-->
-        <div class="proposals">
-            <h3>Proposals</h3>
-            <ul id="proposal-list">
+        <div class = "text-center">
+            <h1 id="title-text">The Metropolitan Global</h1>
         </div>
-        <!--Image-->
 
-        <!--chat window-->
-        <div>
-            <ul id="forum-list">
-            </ul>
-            <div id="forum-comment-container">
-            </div>
+        <div class="auth-btn-container mt-2 mb-2">
+            <a class="auth-btn hidden" href="/login.html">Log In</a>
+            <a class="auth-btn hidden" href="/signup.html">Sign Up</a>
         </div>
+
+    </nav>
+</header>
+
+<div class="main-grid">
+    <!--cause Box-->
+    <div class="causes">
+        <h3 id="cause-list-heading"></h3>
+        <ul id="cause-list"></ul>
     </div>
-<div class = "container-fluid bg-dark">
-    <div class = "row" id = "bottom" style = "height: 500px">
-        <div class = "col-sm">
-        
-                
-                    <div class="col-sm uk-card uk-card-primary uk-card-hover uk-card-body uk-light" >
-                        <h3 id="selected-title">Cancer</h3>
-                        <p  id="selected-founder">Founder: Sir Reginald Bottomlicker</p>
-                        <p id= "selected-likeCount">Likes💓: 100</p>
-                        <p id= "selected-actionPlan">description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                        <a class="uk-button uk-button-default" href="#modal-overflow" uk-toggle>Comments Section</a>
-
-                        <div id="modal-overflow" uk-modal>
-                            <div class="uk-modal-dialog">
-                        
-                                <button class="uk-modal-close-default" type="button" uk-close></button>
-                        
-                                <div class="uk-modal-header">
-                                    <h2 class="uk-modal-title">Comments</h2>
-                                </div>
-                        
-                                <div class="uk-modal-body" uk-overflow-auto>
-                        
-                                    <p class = "description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>                     
-                                </div>
-                        
-                                <div class="uk-modal-footer uk-text-right">
-                                    <textarea class="uk-textarea" rows="11" placeholder="comments"></textarea>
-                                    <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
-                                    <button class="submit uk-button uk-button-primary" type="button">Submit</button>
-                                </div>
-                        
-                            </div>
-                        </div>
-                    </div>
-                
-            </div>
-                <div class = "col-lg container">
-                    <button class="col-sm uk-button uk-button-secondary" id ="yes">Yes</button>
-                    <button class="col-sm uk-button uk-button-danger" id ="no">No</button>
-                </div>
-                <div class="col-sm uk-margin">
-                        <textarea class="uk-textarea" rows="11" placeholder="Messages"></textarea>
-                        <button id="chat-submit" type="submit" class="btn btn-danger" style="width: 100px; height: 50px">Send</button>
-                    </div>
-        </div>
-        
-        </div>  
-        
-            
-            
-        
+    <!--Image-->
+    <div id="globe-mount"></div>
+    <!--chat window-->
+    <div>
+        <ul id="forum-list" class="forum-comments-list"></ul>
+    </div>
 </div>
-</div>
-
+<footer class = "grid-2">
+    <div>
+        <h3 id="cause-title"></h3>
+        <p id="cause-action-plan"></p>
+        <span id="cause-founder"></span>
+    </div>
+    <div id="forum-create-comment-container">
+    </div>
+</footer>  
 <script src="assets/javascript/election.js"></script>
+<script src="assets/javascript/landingpage.js"></script>
 <script>
     function myFunction(x) {
       x.classList.toggle("fa-thumbs-down");

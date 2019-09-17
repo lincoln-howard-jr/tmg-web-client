@@ -1,0 +1,35 @@
+.forum-comments-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+main{
+  display: grid;
+  grid-template-columns: 1fr 8fr 1fr;
+}
+.forum-comment {
+  display: block;
+  width: 100%;
+}
+.forum-comment > .forum-comments-list {
+  margin-left: 15%;
+}
+.forum-comment > .forum-comments-list::before {
+  content: "---";
+  position: absolute;
+  top: 10px;
+  background-color: #888;
+}
+main > * , .forum-comment > * {
+  grid-column: 2;
+}
+div.forum-comment-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+div.forum-comment-container > .forum-comment-content {
+  text-align: left;
+}
+div.forum-comment-container > .forum-comment-info {
+  text-align: right;
+}
