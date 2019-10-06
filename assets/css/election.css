@@ -1,60 +1,3 @@
-body {
-  background: var(--tan-blonde);
-  min-height: 100vh;
-  padding-bottom: 190px;
-}
-.auth-btn-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-}
-.auth-btn {
-  color: var(--primary);
-}
-.hidden {
-  display: none;
-}
-header > nav {
-  display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
-  align-items: center;
-  justify-items: center;
-}
-.main-grid {
-  display: grid;
-  column-gap: 2vmin;
-  grid-template-columns: 5fr 2fr 5fr;
-}
-.grid-2 {
-  display: grid;
-  column-gap: 5vw;
-  grid-template-columns: 1fr 1fr;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-li.comment-container {
-  display: grid;
-  grid-template-columns: 6fr 5fr 1fr 1fr;
-  grid-column-gap: 5px;
-  padding: 5px 0;
-}
-li.comment-container.selected {
-  background-color: #f5f5fa;
-}
-.i-liked {
-  color: #ff0000;
-}
-.like-details, .comment-details {
-  cursor: pointer;
-}
-li.comment-container > ul {
-  grid-column: 1/5;
-  margin-left: 10%;
-  border-left: 1px dotted #888;
-  background: var(--tan-blonde);
-}
 #proposal-list > li {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -70,68 +13,9 @@ canvas {
   width: 100%;
   background-color: #00000000;
 }
-.forum-comments-list {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+#cause-list {
+  padding: 5px 25px !important;
 }
-.forum-comment {
-  display: block;
-  width: 100%;
-}
-.forum-comment.i-liked > span.forum-comment-likes {
-  color: red;
-}
-.forum-comment > .forum-comments-list {
-  margin-left: 7%;
-}
-.forum-comment * .forum-comment::before {
-  content: ".";
-  color: #00000000;
-  margin-left: -3%;
-  width: 3%;
-  position: absolute;
-  border-left: 1px dotted #888;
-  opacity: 0;
-}
-.forum-comment.open * .forum-comment::before {
-  opacity: 1;
-}
-.forum-comment:not(.open) * .forum-comment.open * .forum-comment::before {
-  opacity: 0;
-}
-.forum-comment * .forum-comment:not(:last-child)::before {
-  border-bottom: 1px dotted #888;
-}
-.forum-comment > * {
-  grid-column: 2;
-}
-div.forum-comment-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-div.forum-comment-container > .forum-comment-content {
-  text-align: left;
-}
-div.forum-comment-container > .forum-comment-info {
-  text-align: right;
-}
-.forum-comment > ul.forum-comments-list {
-  max-height: 0;
-  overflow: hidden;
-}
-.forum-comment.selected > div.forum-comment-container {
-  background-color: #88888844;
-}
-.forum-comment.open > ul.forum-comments-list {
-  max-height: unset;
-}
-.forum-comment-info > span {
-  margin: 0 5px;
-}
-footer {
-  width: 100vw;
-  position: fixed;
-  bottom: 0;
-  height: 175px;
+.mkscroll {
+  overflow-y: scroll;
 }

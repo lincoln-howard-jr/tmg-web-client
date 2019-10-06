@@ -118,7 +118,7 @@ class MonthDayYear {
 // let tmg = TMG ()
 const TMG = () => {
   // base url
-  // const base = 'https://09xunbe0wj.execute-api.us-east-1.amazonaws.com/Prod';
+  //const base = 'https://09xunbe0wj.execute-api.us-east-1.amazonaws.com/Prod';
   const base = 'http://localhost:8000';
   // default options for post requests
   const postOpts = {
@@ -472,17 +472,65 @@ const TMG = () => {
       }
     });
   }
+  // get cause by id
+  const getSingleCause = async (id, my=new MonthYear ()) => {
+    return new Promise (async (resolve, reject) => {
+      try {
+        let response = await fetch (`${base}/api/elections/${my.month},${my.year}/causes/${id}`);
+        let cause = await response.json ();
+        resolve (cause);
+      } catch (e) {
+        reject (e);
+      }
+    });
+  }
+  // get cause by user
+  const getSingleCauseByUser = async (userId) => {
+    return new Promise (async (resolve, reject) => {
+      try {
+        let response = await fetch (`${base}/api/elections/${my.month},${my.year}/causes?user=${userId}`);
+        let cause = await response.json ();
+        resolve (cause);
+      } catch (e) {
+        reject (e);
+      }
+    });
+  }
   // /elections/:mm,:yyyy/my-cause
   // get my cause for an election
   const getMyCause = async (my=new MonthYear ()) => {
     return new Promise (async (resolve, reject) => {
       try {
-        let response = await fetch (`${base}/api/elections/${my.month},${my.year}/my-cause`, {credentials: "include"});
-        if (!response.ok) throw new RequestStatusError ('/GET', `${base}/api/elections/${my.month},${my.year}/my-cause`, response.status);
+        let response = await fetch (`${base}/api/current-election/my-cause`, {credentials: "include"});
+        if (!response.ok) throw new RequestStatusError ('/GET', `${base}/api/current-election/my-cause`, response.status);
         let data = await response.json ();
         resolve (data);
       } catch (e) {
         reject (e);
+      }
+    });
+  }
+  // update my cause
+  const updateMyCause = async (cause) => {
+    return new Promise (async (resolve, reject) => {
+      try {
+        let updated = await post (`/api/current-election/my-cause`, cause);
+        resolve (updated);
+      } catch (e) {
+        reject (e);
+      }
+    })
+  }
+  // check balance of the global fund
+  const checkGlobalFund = async () => {
+    return new Promise (async (resolve) => {
+      try {
+        let response = await fetch (`${base}/api/balance`);
+        let data = await response.json ();
+        let balance = `${data.available [0].amount / 100}`
+        resolve ([null, balance]);
+      } catch (e) {
+        resolve ([e, null]);
       }
     });
   }
@@ -504,6 +552,9 @@ const TMG = () => {
     like,
     getElection,
     getCauses,
-    comments
+    comments,
+    getMyCause,
+    updateMyCause,
+    checkGlobalFund
   }
 }

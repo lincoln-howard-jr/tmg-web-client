@@ -2,14 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Election/Forum Page</title>
     <script src="assets/javascript/tmg-client.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/107/three.js"></script>
+    <script src="assets/javascript/generic.js"></script>
+    <script src="assets/javascript/comments.js"></script>
+    <script src="assets/javascript/election.js"></script>
+    <script src="assets/javascript/landingpage.js"></script>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/uikit.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- UIkit CSS -->
@@ -21,7 +24,9 @@
 <header>
     <nav>
 
-        <div id="welcome-user" class = "italics">
+        <div class = "italics">
+            <div id="globe-mount"></div>
+            <span id="global-fund-balance"></span>
         </div>
 
         <div class = "text-center">
@@ -29,8 +34,9 @@
         </div>
 
         <div class="auth-btn-container mt-2 mb-2">
-            <a class="auth-btn hidden" href="/login.html">Log In</a>
-            <a class="auth-btn hidden" href="/signup.html">Sign Up</a>
+            <a class="auth-btn no-session hidden" href="/login.html">Log In</a>
+            <a class="auth-btn no-session hidden" href="/signup.html">Sign Up</a>
+            <a class="auth-btn has-session hidden" href="/my-cause.html">Welcome <span id="session-username"></span></a>
         </div>
 
     </nav>
@@ -38,18 +44,16 @@
 
 <div class="main-grid">
     <!--cause Box-->
-    <div class="causes">
+    <div class="causes mkscroll">
         <h3 id="cause-list-heading"></h3>
         <ul id="cause-list"></ul>
     </div>
-    <!--Image-->
-    <div id="globe-mount"></div>
     <!--chat window-->
-    <div>
-        <ul id="forum-list" class="forum-comments-list"></ul>
+    <div class="mkscroll">
+        <ul id="forum-list" class="comments-list"></ul>
     </div>
 </div>
-<footer class = "grid-2">
+<footer class = "main-grid">
     <div>
         <h3 id="cause-title"></h3>
         <p id="cause-action-plan"></p>
@@ -58,17 +62,5 @@
     <div id="forum-create-comment-container">
     </div>
 </footer>  
-<script src="assets/javascript/election.js"></script>
-<script src="assets/javascript/landingpage.js"></script>
-<script>
-    function myFunction(x) {
-      x.classList.toggle("fa-thumbs-down");
-    }
-    </script>
-
-<script src="assets/javascript/time.js"></script>
-    <!-- UIkit JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.6/js/uikit.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.6/js/uikit-icons.min.js"></script>
 </body>
 </html>

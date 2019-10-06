@@ -9,21 +9,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/107/three.js"></script>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/uikit.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- UIkit CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.6/css/uikit.min.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/cause.css">
-    <script src="assets/js/cause.js"></script>
-    <script src="assets/js/generic.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/my-cause.css">
 </head>
 <body>
 
     <header>
         <nav>
     
-            <div id="welcome-user" class = "italics">
+            <div id="session-username" class = "italics">
               
             </div>
     
@@ -34,29 +33,23 @@
             <div class="auth-btn-container mt-2 mb-2">
                 <a class="auth-btn hidden" href="/login.html">Log In</a>
                 <a class="auth-btn hidden" href="/signup.html">Sign Up</a>
-                <a class="auth-btn has-session hidden" href="/my-cause.html">Welcome <span id="session-username"></span></a>
             </div>
     
         </nav>
     </header>
 
     <main>
-        <h2 id="cause-title"></h2>
-        <label>Action Plan:</label>
-        <p id="cause-action-plan"></p>
-        <label>Metrics:</label>
-        <p>
-            Revision Count: <span id="revision-count"></span>
-            <br>
-            Like Count: <span id="like-count"></span>
-            <br>
-            Comment Count: <span id="comment-count"></span>
-            <br>
-            Hit Count: <span id="hit-count"></span>
-        </p>
-        <label>Comments:</label>
-        <ul id="cause-comments-list" class="comments-list"></ul>
+      <label>Title</label>
+      <br/>
+      <input id="title-input" />
+      <br/>
+      <label>Action Plan:</label>
+      <br/>
+      <textarea id="action-plan-input"></textarea>
+      <button id="submit-btn">Submit</button>
     </main>
 
+  <script src="assets/javascript/generic.js"></script>
+  <script src="assets/javascript/my-cause.js"></script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 window.addEventListener ('DOMContentLoaded', () => {
+  const mountPoint = document.querySelector ('#globe-mount');
   // img resources
-  const earthMap = '/assets/images/2_no_clouds_4k.jpg';
+  const earthMap = '/assets/images/old_2_no_clouds_4k.jpg';
   const earthBumpMap = '/assets/images/elev_bump_4k.jpg';
   const earthSpecularMap = '/assets/images/water_4k.png';
   const banner = '/assets/images/banner with space.jpg';
@@ -23,7 +24,8 @@ window.addEventListener ('DOMContentLoaded', () => {
   let frameId = false;
   // rotate earth
   const animate = () => {
-    earth.rotation.y += 0.005;
+    earth.rotation.y -= 0.005;
+    earth.rotation.z -= 0.0001;
     renderScene()
     frameId = requestAnimationFrame(animate)
   }
@@ -33,8 +35,10 @@ window.addEventListener ('DOMContentLoaded', () => {
   }
   // setup everything
   const renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
-  document.querySelector ('#globe-mount').appendChild( renderer.domElement );
-  let size = document.querySelector ('#globe-mount').scrollWidth;
+  mountPoint.appendChild( renderer.domElement );
+  let w = mountPoint.scrollWidth;
+  let h = mountPoint.scrollHeight;
+  let size = (w > h ? h : w);
   renderer.setSize (size, size);
   const scene = new THREE.Scene ();
   const camera = new THREE.PerspectiveCamera (
@@ -45,13 +49,15 @@ window.addEventListener ('DOMContentLoaded', () => {
   );
   // on resize
   window.addEventListener ('resize', () => {
-    size = document.querySelector ('#globe-mount').scrollWidth;
+    w = mountPoint.scrollWidth;
+    h = mountPoint.scrollHeight;
+    size = mountPoint.scrollWidth;
     renderer.setSize (size, size);
     camera.updateProjectionMatrix ();
   });
 
 
-  const ambientLight = new THREE.AmbientLight (0xbbbbbb, 2);
+  const ambientLight = new THREE.AmbientLight (0x999999, 2.5);
   scene.add (ambientLight);
   const earth = createEarth ();
   earth.position.z = -5;

@@ -1,0 +1,28 @@
+** First scenario is a list of previews
+<li>
+  <span>{founder}</span>
+  <span>{title}</span>
+  <span>{timestamp}</span>
+  <span>{like/comment count}</span>
+</li>
+
+** Second scenario is a single cause in detail
+<article>
+  <h2>{title}</h2>
+  <h3>{founder} - {datetime}</h3>
+  <p>
+    {actionPlan}
+  </p>
+  !OPTIONAL <a>{Revision History}</a>
+</article>
+<ul>
+  ...comments
+</ul>
+** Final case is an editor for the cause
+<main>
+<label name='title'>
+  <input name='title'>
+  <label name='action-plan'>
+  <textarea name='action-plan'>
+  <aside> ***Here are tips for writing an action plan 
+</main>
